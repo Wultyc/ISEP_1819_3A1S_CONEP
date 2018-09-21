@@ -34,20 +34,20 @@ xz
 yx = rep(1:3,4)
 yx
 
-#i. O vetor alfanumérico "FCP" "SLB" "SCP". 
+#i. O vetor alfanumerico "FCP" "SLB" "SCP". 
 yy = c("FCP", "SLB", "SCP")
 yy
 
-#j. A matriz (m) de dimensao 4x3 e cujos elementos sao os números inteiros de 1 até 12. O preenchimento da matriz deve ser feito por linha. 
+#j. A matriz (m) de dimensao 4x3 e cujos elementos sao os numeros inteiros de 1 ate 12. O preenchimento da matriz deve ser feito por linha. 
 yz = matrix(1:12, 4,3, byrow=TRUE)
 yz
 
 #	i. Execute os comandos length(m), dim(m), nrow(m), ncol(m), m[2,2], m[,2], m[3,]. 
-length(yz) 	#Tamanho/Nº de posições -> 12
+length(yz) 	#Tamanho/N de posicões -> 12
 dim(yz)	#Dimensões -> 4 3
-nrow(yz)	#Nº de Linhas -> 4
-ncol(yz)	#Nº de Colunas -> 3
-yz[2,2]	#Valor na posiçao [2,2]
+nrow(yz)	#N de Linhas -> 4
+ncol(yz)	#N de Colunas -> 3
+yz[2,2]	#Valor na posicao [2,2]
 yz[,2]	#Valores na Coluna 2
 yz[3,]	#Valores na Linha 3
 
@@ -57,7 +57,7 @@ yz
 
 #	iii. Qual o valor do elemento que corresponde a linha 2 e a coluna 2?
 yz[2,2]
-#	iv. Determine a soma dos elementos de cada coluna (apply(m, 2, sum)) média dos elementos de cada linha (apply(m, 1, mean)).
+#	iv. Determine a soma dos elementos de cada coluna (apply(m, 2, sum)) media dos elementos de cada linha (apply(m, 1, mean)).
 zx = apply(yz, 2, sum)
 zx
 zy = apply(yz, 1, mean)
