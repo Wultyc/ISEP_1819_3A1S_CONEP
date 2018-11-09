@@ -4,6 +4,11 @@ rm(list=ls())
 #Seed do script
 set.seed(492365)
 
+#Constantes
+A2 <- 0.729
+D4 <- 2.282
+D3 <- 0
+
 #Define o diretório de trabalho
 #dir <- getScriptPath()
 #dir
@@ -14,47 +19,31 @@ library(readxl)
 
 #dados guardados no excel
 dados_trabalho = read_excel("dados_trabalho.xlsx")
+N <- NROW(dados_trabalho[1])
 #View(dados_trabalho)
 
-#Media de cada amostra
-media.linha <- apply(dados_trabalho[1:50,2:4], 1, mean)
+#Media
+media.linha <- apply(dados_trabalho[1:N,2:5], 1, mean)
 #View(media.linha)
-
-#Media Geral
 media.global <- mean(unlist(media.linha))
 media.global
 
-#Numero de amostras
-N <- NROW(media.linha)
+#Amplitude
+amplitude.linha <- apply(dados_trabalho[1:N,2:5], 1, max) - apply(dados_trabalho[1:N,2:5], 1, min)
+amplitude.media <- mean(amplitude.linha)
 
+#Carta X
+UCL.x <- media.global + A2 * amplitude.media
+LCL.x <- media.global - A2 * amplitude.media
+CL.x  <- media.global
 
-LCL <- 6
-UCL <- 8
-CL <- 7
+plot(media.linha,type = "b", main="Carta de Controlo X", xlab = "Numero da Amostra", ylab = "Espessura do Vidro")
+lines(rep(UCL.x, N), col="red")
+lines(rep(LCL.x, N), col="red")
+lines(rep(CL.x, N), col="blue")
 
-ucl <- rep(UCL,N)
-lcl <- rep(LCL,N)
-cl <- rep(CL,N)
-
-plot(media.linha,type = "b", main="Carta de Controlo", xlab = "Numero da Amostra", ylab = "Espessura do Vidro", ylim=c(LCL-0.5, UCL+0.5))
-lines(ucl, col="red")
-lines(lcl, col="red")
-lines(cl, col="blue")
-
-#Existe um ponto fora dos limites
-#É necessário remover o ponto 8
-
-#determina quais os valores fora dos limites
-fora.lim1 <- media.linha > ucl
-fora.lim2 <- media.linha < lcl
-fora.lim <- fora.lim1 + fora.lim2
-
-#encontra os indices
-idx.fora <- which(fora.lim == 1)
-
-#remove os indices indicados
-media.linha <- media.linha[-idx.fora]
-
-#calcula uma nova média global
-
-
+#remover os pontos, calcular TUDO de novo e apresentar o novo grafico
+#msm para a amplitude
+# ucl amplitude.media * D4
+# lcl amplitude.media * D3
+# cl  amplitude.media
