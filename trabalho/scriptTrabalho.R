@@ -1,3 +1,21 @@
+################################################################################
+#                               Projeto de CONEP                               #
+#                                                                              #
+# Realizado por:                                                               #
+#               Bárbara Santos  1161033                                        #
+#               Jorge Gabriel   1160929                                        #
+#               Nuno Dinis      1161042                                        #
+#                                                                              #
+################################################################################
+
+# AVISO:
+# Antes da execução deste script, deve-se definir o diretório de trabalho para a
+# pasta do projeto a fim de evitar problemas de execução
+
+
+#------------------------------ Início de Script ------------------------------#
+
+
 #limpa o ambiente do R
 rm(list=ls())
 
