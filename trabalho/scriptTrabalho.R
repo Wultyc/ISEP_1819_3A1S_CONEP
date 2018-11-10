@@ -1,12 +1,12 @@
-################################################################################
-#                               Projeto de CONEP                               #
-#                                                                              #
-# Realizado por:                                                               #
-#               Bárbara Santos  1161033                                        #
-#               Jorge Gabriel   1160929                                        #
-#               Nuno Dinis      1161042                                        #
-#                                                                              #
-################################################################################
+####################################################################################################
+#                                         Projeto de CONEP                                         #
+#                                                                                                  #
+# Realizado por:                                                                                   #
+#               Bárbara Santos  1161033                                                            #
+#               Jorge Gabriel   1160929                                                            #
+#               Nuno Dinis      1161042                                                            #
+#                                                                                                  #
+####################################################################################################
 
 # AVISO:
 # Antes da execução deste script, deve-se definir o diretório de trabalho para a
@@ -17,7 +17,7 @@
 # as suas dependências instalados no sistema.
 
 
-#------------------------------ Início de Script ------------------------------#
+#---------------------------------------- Início de Script ----------------------------------------#
 
 #limpa o ambiente do R
 rm(list=ls())
@@ -36,6 +36,8 @@ abr.graf <- 0.25 #Limites do gráfico
 #import de bibliotecas
 library(readxl)
 
+#--------------------------------------------- Início ---------------------------------------------#
+
 #dados guardados no excel
 dados_trabalho = read_excel("dados_trabalho.xlsx")
 N <- NROW(dados_trabalho[1])
@@ -51,13 +53,14 @@ media.global
 amplitude.linha <- apply(dados_trabalho[1:N,2:5], 1, max) - apply(dados_trabalho[1:N,2:5], 1, min)
 amplitude.media <- mean(amplitude.linha)
 
-#---------------------------------- Carta X -----------------------------------#
+#-------------------------------------------- Carta X ---------------------------------------------#
 
 UCL.x <- media.global + A2 * amplitude.media
 LCL.x <- media.global - A2 * amplitude.media
 CL.x  <- media.global
 
 plot(media.linha,type = "b", main="Carta de Controlo X", xlab = "Número da Amostra", ylab = "Espessura do Vidro")
+
 lines(rep(UCL.x, N), col="red")
 lines(rep(LCL.x, N), col="red")
 lines(rep(CL.x, N), col="blue")
@@ -108,17 +111,19 @@ paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
 
 #Apresenta o gráfico
 plot(media.linha,type = "b", main=paste("Carta de Controlo X - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.x-abr.graf,UCL.x+abr.graf))
+
 lines(rep(UCL.x, N), col="red")
 lines(rep(LCL.x, N), col="red")
 lines(rep(CL.x, N), col="blue")
 
-#---------------------------------- Carta R -----------------------------------#
+#-------------------------------------------- Carta R ---------------------------------------------#
 
 UCL.r <- amplitude.media * D4
 LCL.r <- amplitude.media * D3
 CL.r  <- amplitude.media
 
 plot(amplitude.linha,type = "b", main="Carta de Controlo R", xlab = "Número da Amostra", ylab = "Espessura do Vidro")
+
 lines(rep(UCL.r, N), col="red")
 lines(rep(LCL.r, N), col="red")
 lines(rep(CL.r, N), col="blue")
@@ -169,8 +174,9 @@ paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
 
 #Apresenta o gráfico
 plot(amplitude.linha,type = "b", main=paste("Carta de Controlo R - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.r-abr.graf,UCL.r+abr.graf))
+
 lines(rep(UCL.r, N), col="red")
 lines(rep(LCL.r, N), col="red")
 lines(rep(CL.r, N), col="blue")
 
-
+#-------------------------------------------- outra c ---------------------------------------------#
