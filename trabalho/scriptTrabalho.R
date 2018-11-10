@@ -19,7 +19,6 @@
 
 #------------------------------ Início de Script ------------------------------#
 
-
 #limpa o ambiente do R
 rm(list=ls())
 
@@ -31,10 +30,8 @@ A2 <- 0.729
 D4 <- 2.282
 D3 <- 0
 
-#Define o diretório de trabalho
-#dir <- getScriptPath()
-#dir
-#setwd(dir)
+#Parametros de configuração
+abr.graf <- 0.25 #Limites do gráfico
 
 #import de bibliotecas
 library(readxl)
@@ -54,18 +51,126 @@ media.global
 amplitude.linha <- apply(dados_trabalho[1:N,2:5], 1, max) - apply(dados_trabalho[1:N,2:5], 1, min)
 amplitude.media <- mean(amplitude.linha)
 
-#Carta X
+#---------------------------------- Carta X -----------------------------------#
+
 UCL.x <- media.global + A2 * amplitude.media
 LCL.x <- media.global - A2 * amplitude.media
 CL.x  <- media.global
 
-plot(media.linha,type = "b", main="Carta de Controlo X", xlab = "Numero da Amostra", ylab = "Espessura do Vidro")
+plot(media.linha,type = "b", main="Carta de Controlo X", xlab = "Número da Amostra", ylab = "Espessura do Vidro")
 lines(rep(UCL.x, N), col="red")
 lines(rep(LCL.x, N), col="red")
 lines(rep(CL.x, N), col="blue")
 
-#remover os pontos, calcular TUDO de novo e apresentar o novo grafico
-#msm para a amplitude
-# ucl amplitude.media * D4
-# lcl amplitude.media * D3
-# cl  amplitude.media
+# Existem pontos fora dos limites, a carta X tem de ser recalculada
+
+#determina quais os valores fora dos limites
+fora.lim1 <- media.linha > UCL.x
+fora.lim2 <- media.linha < LCL.x
+fora.lim <- fora.lim1 + fora.lim2
+
+#encontra os indices e remove-os
+idx.fora <- which(fora.lim == 1)
+if(NROW(idx.fora) > 0){
+  media.linha <- media.linha[-idx.fora]
+}
+
+#Recalcula tudo de novo enquanto houver pontos fora do controlo 
+itr <- 0 #Variavel de controlo de iterações
+
+while(sum(fora.lim) > 0 && itr < 5){
+  media.global <- mean(unlist(media.linha))
+  
+  UCL.x <- media.global + A2 * amplitude.media
+  LCL.x <- media.global - A2 * amplitude.media
+  CL.x  <- media.global
+  
+  #determina quais os valores fora dos limites
+  fora.lim1 <- media.linha > UCL.x
+  fora.lim2 <- media.linha < LCL.x
+  fora.lim <- fora.lim1 + fora.lim2
+  
+  #encontra os indices e remove-os
+  idx.fora <- which(fora.lim == 1)
+  if(NROW(idx.fora) > 0){
+    media.linha <- media.linha[-idx.fora]
+  }
+  
+  itr <- itr+1 #Incrementa a variavel de iteração
+}
+
+#Apresenta algumas informações
+paste("UCL: ", UCL.x, sep=" ")
+paste("LCL: ", LCL.x, sep=" ")
+paste("CL: ", CL.x, sep=" ")
+paste("Nº de Iterações Necessárias: ", itr, sep=" ")
+paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
+
+#Apresenta o gráfico
+plot(media.linha,type = "b", main=paste("Carta de Controlo X - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.x-abr.graf,UCL.x+abr.graf))
+lines(rep(UCL.x, N), col="red")
+lines(rep(LCL.x, N), col="red")
+lines(rep(CL.x, N), col="blue")
+
+#---------------------------------- Carta R -----------------------------------#
+
+UCL.r <- amplitude.media * D4
+LCL.r <- amplitude.media * D3
+CL.r  <- amplitude.media
+
+plot(amplitude.linha,type = "b", main="Carta de Controlo R", xlab = "Número da Amostra", ylab = "Espessura do Vidro")
+lines(rep(UCL.r, N), col="red")
+lines(rep(LCL.r, N), col="red")
+lines(rep(CL.r, N), col="blue")
+
+# Existem pontos fora dos limites, a carta R tem de ser recalculada
+
+#determina quais os valores fora dos limites
+fora.lim1 <- amplitude.linha > UCL.r
+fora.lim2 <- amplitude.linha < LCL.r
+fora.lim <- fora.lim1 + fora.lim2
+
+#encontra os indices e remove-os
+idx.fora <- which(fora.lim == 1)
+if(NROW(idx.fora) > 0){
+  amplitude.linha <- amplitude.linha[-idx.fora]
+}
+
+#Recalcula tudo de novo enquanto houver pontos fora do controlo 
+itr <- 0 #Variavel de controlo de iterações
+
+while(sum(fora.lim) > 0 || itr > 5){
+  amplitude.media <- mean(amplitude.linha)
+  
+  UCL.r <- amplitude.media * D4
+  LCL.r <- amplitude.media * D3
+  CL.r  <- amplitude.media
+  
+  #determina quais os valores fora dos limites
+  fora.lim1 <- amplitude.linha > UCL.r
+  fora.lim2 <- amplitude.linha < LCL.r
+  fora.lim <- fora.lim1 + fora.lim2
+  
+  #encontra os indices e remove-os
+  idx.fora <- which(fora.lim == 1)
+  if(NROW(idx.fora) > 0){
+    amplitude.linha <- amplitude.linha[-idx.fora]
+  }
+  
+  itr <- itr+1 #Incrementa a variavel de iteração
+}
+
+#Apresenta algumas informações
+paste("UCL: ", UCL.r, sep=" ")
+paste("LCL: ", LCL.r, sep=" ")
+paste("CL: ", CL.r, sep=" ")
+paste("Nº de Iterações Necessárias: ", itr, sep=" ")
+paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
+
+#Apresenta o gráfico
+plot(amplitude.linha,type = "b", main=paste("Carta de Controlo R - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.r-abr.graf,UCL.r+abr.graf))
+lines(rep(UCL.r, N), col="red")
+lines(rep(LCL.r, N), col="red")
+lines(rep(CL.r, N), col="blue")
+
+
