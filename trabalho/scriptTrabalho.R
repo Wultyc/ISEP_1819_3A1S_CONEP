@@ -10,7 +10,11 @@
 
 # AVISO:
 # Antes da execução deste script, deve-se definir o diretório de trabalho para a
-# pasta do projeto a fim de evitar problemas de execução
+# pasta do projeto a fim de evitar problemas de execução.
+
+# DEPENDÊNCIAS:
+# Para a execução deste script é necessario ter o package "readxl" bem como as
+# as suas dependências instalados no sistema.
 
 
 #------------------------------ Início de Script ------------------------------#
