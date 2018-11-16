@@ -32,6 +32,7 @@ D3 <- 0
 
 #Parametros de configuração
 abr.graf <- 0.25 #Limites do gráfico
+limite.itrs <- 5 #Limite de iterações de correção
 
 #import de bibliotecas
 library(readxl)
@@ -81,7 +82,7 @@ if(NROW(idx.fora) > 0){
 #Recalcula tudo de novo enquanto houver pontos fora do controlo 
 itr <- 0 #Variavel de controlo de iterações
 
-while(sum(fora.lim) > 0 && itr < 5){
+while(sum(fora.lim) > 0 && itr < limite.itrs){
   media.global <- mean(unlist(media.linha))
   
   UCL.x <- media.global + A2 * amplitude.media
@@ -144,7 +145,7 @@ if(NROW(idx.fora) > 0){
 #Recalcula tudo de novo enquanto houver pontos fora do controlo 
 itr <- 0 #Variavel de controlo de iterações
 
-while(sum(fora.lim) > 0 || itr > 5){
+while(sum(fora.lim) > 0 || itr > limite.itrs){
   amplitude.media <- mean(amplitude.linha)
   
   UCL.r <- amplitude.media * D4
@@ -179,4 +180,14 @@ lines(rep(UCL.r, N), col="red")
 lines(rep(LCL.r, N), col="red")
 lines(rep(CL.r, N), col="blue")
 
-#-------------------------------------------- outra c ---------------------------------------------#
+#-------------------------------------------- Capcidade ---------------------------------------------#
+
+#RCPk
+LSL <- 6
+USL <- 8
+sigma <- amplitude.media/2.059
+rcpk <- min((USL-media.global)/(3*sigma),(media.global-LSL)/(3*sigma))
+paste("RCPk:",rcpk,sep=" ")
+
+#-------------------------------------------- Amostragem ---------------------------------------------#
+
