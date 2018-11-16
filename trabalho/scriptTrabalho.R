@@ -19,11 +19,11 @@
 
 #---------------------------------------- Início de Script ----------------------------------------#
 
-#Incluir script com uma função
-source("define_plano_amostragem.R")
-
 #limpa o ambiente do R
 rm(list=ls())
+
+#Incluir script com uma função
+source("define_plano_amostragem.R")
 
 #Seed do script
 set.seed(492365)
@@ -193,10 +193,21 @@ rcpk <- min((USL-media.global)/(3*sigma),(media.global-LSL)/(3*sigma))
 paste("RCPk:",rcpk,sep=" ")
 
 #------------------------------------------ Amostragem --------------------------------------------#
-
+N <- 1000   # Tamanho do lote
 p1 <- 0.01  #p1 -> pior qualidade a que o processo pode operar e que ainda conduz a uma probabilidade elevada de aceitação.
 p2 <- 0.06  #p2 -> valor da qualidade a partir do qual se considera que o produto não é aceitável 
 a <- 0.050  #a (alfa) -> risco do produtor
 b <- 0.100  #b (beta) -> risco do consumidor
 
 nc <- define_plano_amostragem(p1,p2,a,b,N)
+
+p <- c(0.0001,0.0005,0.001,0.005,0.01,0.05,0.1) # Conjunto de pontos pedidos
+p.graf <- seq(0.0001, 0.1, by=0.0005) #Maior conjunto de pontos para uma curva mais perfeita
+
+#Curva OC tipo B (Distribuição binomial)
+Pa <- pbinom(nc[2],nc[1],p) #probabilidade de aceitação B
+Pa.graf <- pbinom(nc[2],nc[1],p.graf) #probabilidade de aceitação B no conjunto de pontos maior
+
+#Desenho do gráfico
+plot(p,Pa, type="l", main="Curva OC do tipo B", xlab="Porpoção de não conformes no lote", ylab="Prob. aceitação do lote")
+plot(p.graf,Pa.graf, type="l", main="Curva OC do tipo B", xlab="Porpoção de não conformes no lote", ylab="Prob. aceitação do lote")
