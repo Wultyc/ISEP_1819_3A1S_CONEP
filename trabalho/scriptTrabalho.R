@@ -19,6 +19,9 @@
 
 #---------------------------------------- Início de Script ----------------------------------------#
 
+#Incluir script com uma função
+source("define_plano_amostragem.R")
+
 #limpa o ambiente do R
 rm(list=ls())
 
@@ -191,3 +194,9 @@ paste("RCPk:",rcpk,sep=" ")
 
 #-------------------------------------------- Amostragem ---------------------------------------------#
 
+p1 <- 0.01  #p1 -> pior qualidade a que o processo pode operar e que ainda conduz a uma probabilidade elevada de aceitação.
+p2 <- 0.06  #p2 -> valor da qualidade a partir do qual se considera que o produto não é aceitável 
+a <- 0.050  #a (alfa) -> risco do produtor
+b <- 0.100  #b (beta) -> risco do consumidor
+
+nc <- define_plano_amostragem(p1,p2,a,b,N)
