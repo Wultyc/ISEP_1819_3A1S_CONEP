@@ -2,27 +2,27 @@
 #                                         Projeto de CONEP                                         #
 #                                                                                                  #
 # Realizado por:                                                                                   #
-#               BÃ¡rbara Santos  1161033                                                            #
+#               Bárbara Santos  1161033                                                            #
 #               Jorge Gabriel   1160929                                                            #
 #               Nuno Dinis      1161042                                                            #
 #                                                                                                  #
 ####################################################################################################
 
 # AVISO:
-# Antes da execuÃ§Ã£o deste script, deve-se definir o diretÃ³rio de trabalho para a
-# pasta do projeto a fim de evitar problemas de execuÃ§Ã£o.
+# Antes da execução deste script, deve-se definir o diretório de trabalho para a
+# pasta do projeto a fim de evitar problemas de execução.
 
-# DEPENDÃŠNCIAS:
-# Para a execuÃ§Ã£oo deste script Ã© necessÃ¡rio ter o package "readxl" bem como as
-# as suas dependÃªncias instalados no sistema.
+# DEPENDÊNCIAS:
+# Para a execuçãoo deste script é necessário ter o package "readxl" bem como as
+# as suas dependências instalados no sistema.
 
 
-#---------------------------------------- InÃ­cio de Script ----------------------------------------#
+#---------------------------------------- Início de Script ----------------------------------------#
 
 #limpa o ambiente do R
 rm(list=ls())
 
-#Incluir script com uma funÃ§Ã£o
+#Incluir script com uma função
 source("define_plano_amostragem.R")
 
 #Seed do script
@@ -33,14 +33,14 @@ A2 <- 0.729
 D4 <- 2.282
 D3 <- 0
 
-#Parametros de configuraÃ§Ã£o
-abr.graf <- 0.25 #Limites do grÃ¡fico
-limite.itrs <- 5 #Limite de iteraÃ§Ã£es de correÃ§Ã£o
+#Parametros de configuração
+abr.graf <- 0.25 #Limites do gráfico
+limite.itrs <- 5 #Limite de iteraçães de correção
 
 #import de bibliotecas
 library(readxl)
 
-#--------------------------------------------- InÃ­cio ---------------------------------------------#
+#--------------------------------------------- Início ---------------------------------------------#
 
 #dados guardados no excel
 dados_trabalho = read_excel("dados_trabalho.xlsx")
@@ -63,7 +63,7 @@ UCL.x <- media.global + A2 * amplitude.media
 LCL.x <- media.global - A2 * amplitude.media
 CL.x  <- media.global
 
-plot(media.linha,type = "b", main="Carta de Controlo X", xlab = "NÃºmero da Amostra", ylab = "Espessura do Vidro")
+plot(media.linha,type = "b", main="Carta de Controlo X", xlab = "Número da Amostra", ylab = "Espessura do Vidro")
 
 lines(rep(UCL.x, N), col="red")
 lines(rep(LCL.x, N), col="red")
@@ -83,7 +83,7 @@ if(NROW(idx.fora) > 0){
 }
 
 #Recalcula tudo de novo enquanto houver pontos fora do controlo 
-itr <- 0 #Variavel de controlo de iteraÃ§Ãµes
+itr <- 0 #Variavel de controlo de iterações
 
 while(sum(fora.lim) > 0 && itr < limite.itrs){
   media.global <- mean(unlist(media.linha))
@@ -103,18 +103,18 @@ while(sum(fora.lim) > 0 && itr < limite.itrs){
     media.linha <- media.linha[-idx.fora]
   }
   
-  itr <- itr+1 #Incrementa a variavel de iteraÃ§Ã£o
+  itr <- itr+1 #Incrementa a variavel de iteração
 }
 
-#Apresenta algumas informaÃ§Ãµes
+#Apresenta algumas informações
 paste("UCL: ", UCL.x, sep=" ")
 paste("LCL: ", LCL.x, sep=" ")
 paste("CL: ", CL.x, sep=" ")
-paste("NÂº de IteraÃ§Ãµes NecessÃ¡rias: ", itr, sep=" ")
+paste("Nº de Iterações Necessárias: ", itr, sep=" ")
 paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
 
-#Apresenta o grÃ¡fico
-plot(media.linha,type = "b", main=paste("Carta de Controlo X - ",itr,"Âª IteraÃ§Ã£o", sep=" "), xlab = "NÃºmero da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.x-abr.graf,UCL.x+abr.graf))
+#Apresenta o gráfico
+plot(media.linha,type = "b", main=paste("Carta de Controlo X - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.x-abr.graf,UCL.x+abr.graf))
 
 lines(rep(UCL.x, N), col="red")
 lines(rep(LCL.x, N), col="red")
@@ -126,7 +126,7 @@ UCL.r <- amplitude.media * D4
 LCL.r <- amplitude.media * D3
 CL.r  <- amplitude.media
 
-plot(amplitude.linha,type = "b", main="Carta de Controlo R", xlab = "NÃºmero da Amostra", ylab = "Espessura do Vidro")
+plot(amplitude.linha,type = "b", main="Carta de Controlo R", xlab = "Número da Amostra", ylab = "Espessura do Vidro")
 
 lines(rep(UCL.r, N), col="red")
 lines(rep(LCL.r, N), col="red")
@@ -146,7 +146,7 @@ if(NROW(idx.fora) > 0){
 }
 
 #Recalcula tudo de novo enquanto houver pontos fora do controlo 
-itr <- 0 #Variavel de controlo de iteraÃ§Ãµes
+itr <- 0 #Variavel de controlo de iterações
 
 while(sum(fora.lim) > 0 || itr > limite.itrs){
   amplitude.media <- mean(amplitude.linha)
@@ -166,18 +166,18 @@ while(sum(fora.lim) > 0 || itr > limite.itrs){
     amplitude.linha <- amplitude.linha[-idx.fora]
   }
   
-  itr <- itr+1 #Incrementa a variavel de iteraÃ§Ã£o
+  itr <- itr+1 #Incrementa a variavel de iteração
 }
 
-#Apresenta algumas informaÃ§Ãµes
+#Apresenta algumas informações
 paste("UCL: ", UCL.r, sep=" ")
 paste("LCL: ", LCL.r, sep=" ")
 paste("CL: ", CL.r, sep=" ")
-paste("NÂº de IteraÃ§Ãµes NecessÃ¡rias: ", itr, sep=" ")
+paste("Nº de Iterações Necessárias: ", itr, sep=" ")
 paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
 
-#Apresenta o grÃ¡fico
-plot(amplitude.linha,type = "b", main=paste("Carta de Controlo R - ",itr,"Âª IteraÃ§Ã£o", sep=" "), xlab = "NÃºmero da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.r-abr.graf,UCL.r+abr.graf))
+#Apresenta o gráfico
+plot(amplitude.linha,type = "b", main=paste("Carta de Controlo R - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.r-abr.graf,UCL.r+abr.graf))
 
 lines(rep(UCL.r, N), col="red")
 lines(rep(LCL.r, N), col="red")
@@ -194,8 +194,8 @@ paste("RCPk:",rcpk,sep=" ")
 
 #------------------------------------------ Amostragem --------------------------------------------#
 N <- 1000   # Tamanho do lote
-p1 <- 0.01  #p1 -> pior qualidade a que o processo pode operar e que ainda conduz a uma probabilidade elevada de aceitaÃ§Ã£o.
-p2 <- 0.06  #p2 -> valor da qualidade a partir do qual se considera que o produto nÃ£o Ã© aceitÃ¡vel 
+p1 <- 0.01  #p1 -> pior qualidade a que o processo pode operar e que ainda conduz a uma probabilidade elevada de aceitação.
+p2 <- 0.06  #p2 -> valor da qualidade a partir do qual se considera que o produto não é aceitável 
 a <- 0.050  #a (alfa) -> risco do produtor
 b <- 0.100  #b (beta) -> risco do consumidor
 
@@ -204,10 +204,10 @@ nc <- define_plano_amostragem(p1,p2,a,b,N)
 p <- c(0.0001,0.0005,0.001,0.005,0.01,0.05,0.1) # Conjunto de pontos pedidos
 p.graf <- seq(0.0001, 0.1, by=0.0005) #Maior conjunto de pontos para uma curva mais perfeita
 
-#Curva OC tipo B (DistribuiÃ§Ã£o binomial)
-Pa <- pbinom(nc[2],nc[1],p) #probabilidade de aceitaÃ§Ã£o B
-Pa.graf <- pbinom(nc[2],nc[1],p.graf) #probabilidade de aceitaÃ§Ã£o B no conjunto de pontos maior
+#Curva OC tipo B (Distribuição binomial)
+Pa <- pbinom(nc[2],nc[1],p) #probabilidade de aceitação B
+Pa.graf <- pbinom(nc[2],nc[1],p.graf) #probabilidade de aceitação B no conjunto de pontos maior
 
-#Desenho do grÃ¡fico
-plot(p,Pa, type="l", main="Curva OC do tipo B", xlab="PorpoÃ§Ã£o de nÃ£o conformes no lote", ylab="Prob. aceitaÃ§Ã£o do lote")
-plot(p.graf,Pa.graf, type="l", main="Curva OC do tipo B", xlab="PorpoÃ§Ã£o de nÃ£o conformes no lote", ylab="Prob. aceitaÃ§Ã£o do lote")
+#Desenho do gráfico
+plot(p,Pa, type="l", main="Curva OC do tipo B", xlab="Porpoção de não conformes no lote", ylab="Prob. aceitação do lote")
+plot(p.graf,Pa.graf, type="l", main="Curva OC do tipo B", xlab="Porpoção de não conformes no lote", ylab="Prob. aceitação do lote")
