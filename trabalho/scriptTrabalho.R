@@ -13,8 +13,8 @@
 # pasta do projeto a fim de evitar problemas de execução.
 
 # DEPENDÊNCIAS:
-# Para a execuçãoo deste script é necessário ter o package "readxl" bem como as
-# as suas dependências instalados no sistema.
+# Para a execuçãoo deste script é necessário ter o package "readxl" bem como as suas dependências
+# instalados no sistema.
 
 
 #---------------------------------------- Início de Script ----------------------------------------#
