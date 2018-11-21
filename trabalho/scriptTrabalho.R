@@ -211,3 +211,22 @@ Pa.graf <- pbinom(nc[2],nc[1],p.graf) #probabilidade de aceitação B no conjunt
 #Desenho do gráfico
 plot(p,Pa, type="l", main="Curva OC do tipo B", xlab="Porpoção de não conformes no lote", ylab="Prob. aceitação do lote")
 plot(p.graf,Pa.graf, type="l", main="Curva OC do tipo B", xlab="Porpoção de não conformes no lote", ylab="Prob. aceitação do lote")
+
+#Simulação da tomada de decição
+M <- 200
+n <- 10
+Pa <- rep(0, length(p)) #Cria um vetor binario para a aceitação do lote
+k <- 0 #Posição no vetor
+
+for(i in p){
+  D <- rep(0,M)
+  for(j in 1:M){
+    lote <- rbern(n,0.1)
+    amostra <- sample(lote,n)
+    if(sum(amostra) >= c){
+      D[j] <- 1
+    }
+  }
+  k <- k + 1
+  Pa[k] <- sum(D)/M
+}
