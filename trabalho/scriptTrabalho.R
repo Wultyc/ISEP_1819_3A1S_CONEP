@@ -117,7 +117,7 @@ paste("Nº de Iterações Necessárias: ", itr, sep=" ")
 paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
 
 #Apresenta o gráfico
-plot(media.linha,type = "b", main=paste("Carta de Controlo X - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.x-abr.graf,UCL.x+abr.graf))
+plot(media.linha,type = "b", main=paste("Carta de Controlo X - Após ",itr," Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.x-abr.graf,UCL.x+abr.graf))
 
 lines(rep(UCL.x, N), col="red")
 lines(rep(LCL.x, N), col="red")
@@ -180,7 +180,7 @@ paste("Nº de Iterações Necessárias: ", itr, sep=" ")
 paste("Pontos fora dos limites: ", sum(fora.lim), sep=" ")
 
 #Apresenta o gráfico
-plot(amplitude.linha,type = "b", main=paste("Carta de Controlo R - ",itr,"ª Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.r-abr.graf,UCL.r+abr.graf))
+plot(amplitude.linha,type = "b", main=paste("Carta de Controlo R - Após ",itr," Iteração", sep=" "), xlab = "Número da Amostra", ylab = "Espessura do Vidro", ylim = c(LCL.r-abr.graf,UCL.r+abr.graf))
 
 lines(rep(UCL.r, N), col="red")
 lines(rep(LCL.r, N), col="red")
