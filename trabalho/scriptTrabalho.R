@@ -13,14 +13,17 @@
 # pasta do projeto a fim de evitar problemas de execução.
 
 # DEPENDÊNCIAS:
-# Para a execuçãoo deste script é necessário ter o package "readxl" bem como as suas dependências
-# instalados no sistema.
+# Para a execuçãoo deste script é necessário ter o package "readxl" e "Rlab" bem como as suas
+# dependências instalados no sistema.
 
 
 #---------------------------------------- Início de Script ----------------------------------------#
 
 #limpa o ambiente do R
 rm(list=ls())
+
+#Importa a biblioteca Rlab
+library(Rlab)
 
 #Incluir script com uma função
 source("define_plano_amostragem.R")
@@ -223,10 +226,14 @@ for(i in p){
   for(j in 1:M){
     lote <- rbern(n,0.1)
     amostra <- sample(lote,n)
-    if(sum(amostra) >= c){
+    if(sum(amostra) >= nc[2]){
       D[j] <- 1
     }
   }
   k <- k + 1
   Pa[k] <- sum(D)/M
 }
+paste("Com base nas seguintes probabidades: ")
+p
+paste("A probabilidade de aceitaçção do lote é:")
+Pa
