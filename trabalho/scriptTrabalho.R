@@ -13,7 +13,7 @@
 # pasta do projeto a fim de evitar problemas de execução.
 
 # DEPENDÊNCIAS:
-# Para a execuçãoo deste script é necessário ter o package "readxl" e "Rlab" bem como as suas
+# Para a execuçãoo deste script é necessário ter os packages "readxl" e "Rlab" bem como as suas
 # dependências instalados no sistema.
 
 
@@ -22,8 +22,9 @@
 #limpa o ambiente do R
 rm(list=ls())
 
-#Importa a biblioteca Rlab
+#Importa a biblioteca Rlab e readxl
 library(Rlab)
+library(readxl)
 
 #Incluir script com uma função
 source("define_plano_amostragem.R")
@@ -39,16 +40,12 @@ D3 <- 0
 #Parametros de configuração
 abr.graf <- 0.25 #Limites do gráfico
 limite.itrs <- 5 #Limite de iteraçães de correção
-
-#import de bibliotecas
-library(readxl)
-
 #--------------------------------------------- Início ---------------------------------------------#
 
 #dados guardados no excel
 dados_trabalho = read_excel("dados_trabalho.xlsx")
 N <- NROW(dados_trabalho[1])
-#View(dados_trabalho)
+View(dados_trabalho)
 
 #Media
 media.linha <- apply(dados_trabalho[1:N,2:5], 1, mean)
