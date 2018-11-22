@@ -14,3 +14,5 @@
 ### Contribuidores ###
 
 * Jorge Gabriel Azevedo
+* Nuno Dinis
+* Bárbara Santos
